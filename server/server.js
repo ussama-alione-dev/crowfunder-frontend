@@ -46,6 +46,10 @@ app.use(
 app.use("/api/investments", authMiddleware, investmentRoutes);
 app.use(errorHandler);
 
+app.get("/api/test", (req, res) => {
+    res.json({ message: "API is working" });
+});
+
 console.log(swaggerSpec.paths);
 
 app.listen(process.env.PORT, () => {
