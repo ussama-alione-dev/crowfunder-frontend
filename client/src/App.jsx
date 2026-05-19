@@ -1,8 +1,21 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AppLayout from "./components/Layouts/AppLayout";
 import { Toaster } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { getProjectsStats } from "./store/slices/projectsSlice";
+import { useEffect } from "react";
 
 const App = () => {
+    // this is the way to get the stats from the server and log it to the console, you can use this data to display it in the dashboard
+    const { stats, error, loading } = useSelector((state) => state.projects);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getProjectsStats());
+    }, [dispatch]);
+
+    console.log(stats);
+
     return (
         <>
             <Toaster

@@ -64,3 +64,79 @@ export async function closeProjectService(projectId) {
     }
     return project;
 }
+export const getProjectsStatsService = async () => {
+    const stats = await Project.aggregate([
+        // Add funding percentage
+        {
+            $addFields: {
+                fundingPercentage: {
+                    $multiply: [
+                        {
+                            $divide: ["$currentFunding", "$fundingGoal"],
+                        },
+                        100,
+                    ],
+                },
+            },
+        },
+
+        // Global stats
+        {
+            $group: {
+                _id: null,
+
+                totalProjects: {
+                    $sum: 1,
+                },
+
+                activeProjects: {
+                    $sum: {
+                        $cond: [{ $eq: ["$status", "active"] }, 1, 0],
+                    },
+                },
+
+                closedProjects: {
+                    $sum: {
+                        $cond: [{ $eq: ["$status", "closed"] }, 1, 0],
+                    },
+                },
+
+                totalFunding: {
+                    $sum: "$currentFunding",
+                },
+
+                projects: {
+                    $push: "$$ROOT",
+                },
+            },
+        },
+
+        // Get top 3 projects
+        {
+            $addFields: {
+                topProjects: {
+                    $slice: [
+                        {
+                            $sortArray: {
+                                input: "$projects",
+                                sortBy: {
+                                    fundingPercentage: -1,
+                                },
+                            },
+                        },
+                        3,
+                    ],
+                },
+            },
+        },
+
+        // Clean response
+        {
+            $project: {
+                projects: 0,
+            },
+        },
+    ]);
+
+    return stats[0];
+};

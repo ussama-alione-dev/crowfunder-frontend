@@ -7,6 +7,7 @@ import {
     updateProjectService,
     deleteProjectService,
     closeProjectService,
+    getProjectsStatsService,
 } from "../services/project.service.js";
 
 export const createProjectController = async (req, res) => {
@@ -72,5 +73,13 @@ export const closeProjectController = async (req, res) => {
     res.status(200).json({
         success: true,
         data: project,
+    });
+};
+
+export const getProjectsStatsController = async (req, res) => {
+    const stats = await getProjectsStatsService();
+    res.status(200).json({
+        success: true,
+        data: stats,
     });
 };
