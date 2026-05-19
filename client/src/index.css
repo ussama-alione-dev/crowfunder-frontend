@@ -129,7 +129,7 @@
 @layer component {
     /* use this class for all pages headings  */
     .page-heading {
-        @apply text-2xl mb-10  relative before:absolute before:bottom-0 pl-4 before:rounded-lg before:left-0 before:h-[calc(100%-0.5rem)] before:bg-primary before:w-1 text-primary;
+        @apply text-2xl   relative before:absolute before:bottom-0 pl-4 before:rounded-lg before:left-0 before:h-[calc(100%-0.5rem)] before:bg-primary before:w-1 text-primary;
     }
 }
 
