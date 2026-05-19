@@ -6,10 +6,9 @@ const AppLayout = () => {
         <div className="flex h-screen overflow-hidden">
             <Sidebar />
 
-                <main className="flex-1 bg-background  overflow-y-auto p-6">
-                    <Outlet />
-                </main>
-            </div>
+            <main className="flex-1 bg-background  overflow-y-auto p-6">
+                <Outlet />
+            </main>
         </div>
     );
 };
