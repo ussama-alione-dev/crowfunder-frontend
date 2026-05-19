@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProjects } from "../store/slices/projectsSlice";
 import ProjectsTable from "../components/ProjectsTable";
 import ProjectsFilter from "../components/ProjectsFilter";
+import ProjectsTableSkeleton from "../components/ProjectsTableSkeleton";
 
 const Projects = () => {
     const { projects, error, loading } = useSelector((state) => state.projects);
@@ -21,7 +22,7 @@ const Projects = () => {
             <ProjectsFilter />
 
             {loading ? (
-                <p>Loading...</p>
+                <ProjectsTableSkeleton />
             ) : projects.length > 0 ? (
                 <div className="overflow-x-visible rounded shadow-lg bg-secondary border mt-4 border-secondary ">
                     <ProjectsTable projects={projects} />
