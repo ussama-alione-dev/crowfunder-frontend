@@ -17,7 +17,10 @@ const ProjectsTable = ({ projects }) => {
                         "Status",
                         "Actions",
                     ].map((header) => (
-                        <th className="px-6 py-3" key={header}>
+                        <th
+                            className="px-6 py-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground"
+                            key={header}
+                        >
                             {header}
                         </th>
                     ))}
