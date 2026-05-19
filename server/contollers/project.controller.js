@@ -27,6 +27,7 @@ export const createProjectController = async (req, res) => {
 };
 
 export const getAllProjectsController = async (req, res) => {
+    // const { projects, investments } = await getAllProjectsService();
     const { projects, investments } = await getAllProjectsService(req.user._id);
 
     res.status(200).json({

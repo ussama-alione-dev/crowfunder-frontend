@@ -83,31 +83,11 @@ const router = Router();
  *         description: Server error
  */
 
-router.post(
-    "/",
-    authMiddleware,
-    roleMiddleware("owner"),
-    createProjectController,
-);
+router.post("/", roleMiddleware("owner"), createProjectController);
 router.get("/", roleMiddleware("owner"), getAllProjectsController);
 router.get("/:id", getProjectByIdController);
-router.put(
-    "/:id",
-    authMiddleware,
-    roleMiddleware("owner"),
-    updateProjectController,
-);
-router.delete(
-    "/:id",
-    authMiddleware,
-    roleMiddleware("owner"),
-    deleteProjectController,
-);
-router.put(
-    "/:id/close",
-    authMiddleware,
-    roleMiddleware("owner"),
-    closeProjectController,
-);
+router.put("/:id", roleMiddleware("owner"), updateProjectController);
+router.delete("/:id", roleMiddleware("owner"), deleteProjectController);
+router.put("/:id/close", roleMiddleware("owner"), closeProjectController);
 
 export default router;
