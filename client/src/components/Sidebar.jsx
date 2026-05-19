@@ -24,7 +24,7 @@ const NAVLINKS = {
 
     create_project: {
         name: "create project",
-        path: "projects/create",
+        path: "create-project",
         icon: <FolderPlus size={16} />,
     },
 };
@@ -60,7 +60,7 @@ const Sidebar = () => {
                     />
                     <div>
                         <p>Oussama Alione</p>
-                        <p className="text-sm text-secondary-foreground">
+                        <p className="text-sm s text-muted-foreground">
                             project owner
                         </p>
                     </div>

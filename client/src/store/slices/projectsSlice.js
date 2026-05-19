@@ -7,7 +7,7 @@ export const getProjects = createAsyncThunk(
         try {
             const res = await axiosInstance.get("/projects");
 
-            return res.data;
+            return res.data.data.projects;
         } catch (error) {
             return thunkAPI.rejectWithValue(
                 error.response?.data?.message || "Something went wrong",
