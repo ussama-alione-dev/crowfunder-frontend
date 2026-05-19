@@ -28,7 +28,58 @@ export async function getAllProjectsService(userId) {
 }
 
 export async function getProjectByIdService(projectId) {
-    const project = await Project.findById(projectId).populate("owner");
+    const project = await Project.aggregate([
+        {
+            $match: {
+                _id: new mongoose.Types.ObjectId(projectId),
+            },
+        },
+
+        {
+            $lookup: {
+                from: "users",
+                localField: "owner",
+                foreignField: "_id",
+                as: "owner",
+            },
+        },
+
+        {
+            $unwind: "$owner",
+        },
+
+        {
+            $lookup: {
+                from: "investments",
+                let: { projectId: "$_id" },
+
+                pipeline: [
+                    {
+                        $match: {
+                            $expr: {
+                                $eq: ["$project", "$$projectId"],
+                            },
+                        },
+                    },
+
+                    {
+                        $lookup: {
+                            from: "users",
+                            localField: "investor",
+                            foreignField: "_id",
+                            as: "investor",
+                        },
+                    },
+
+                    {
+                        $unwind: "$investor",
+                    },
+                ],
+
+                as: "investments",
+            },
+        },
+    ]);
     if (!project) {
         throw new CustomError("Project not found", 404);
     }
