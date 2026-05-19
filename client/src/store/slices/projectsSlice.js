@@ -73,6 +73,21 @@ export const deleteProject = createAsyncThunk(
     },
 );
 
+export const getProjectsStats = createAsyncThunk(
+    "projects/getProjectsStats",
+    async (_, thunkAPI) => {
+        try {
+            const res = await axiosInstance.get("/projects/stats");
+
+            return res.data.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message || "Something went wrong",
+            );
+        }
+    },
+);
+
 const projectsSlice = createSlice({
     name: "projects",
     initialState: {
@@ -80,6 +95,7 @@ const projectsSlice = createSlice({
         loading: false,
         selectedProject: null,
         error: null,
+        stats: null,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -150,6 +166,19 @@ const projectsSlice = createSlice({
                 }
             })
             .addCase(updateProject.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            });
+
+        builder
+            .addCase(getProjectsStats.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(getProjectsStats.fulfilled, (state, action) => {
+                state.loading = false;
+                state.stats = action.payload;
+            })
+            .addCase(getProjectsStats.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             });

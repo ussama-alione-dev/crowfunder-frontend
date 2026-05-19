@@ -5,6 +5,7 @@ import {
     deleteProjectController,
     getAllProjectsController,
     getProjectByIdController,
+    getProjectsStatsController,
     updateProjectController,
 } from "../contollers/project.controller.js";
 
@@ -85,6 +86,7 @@ const router = Router();
 
 router.post("/", roleMiddleware("owner"), createProjectController);
 router.get("/", roleMiddleware("owner"), getAllProjectsController);
+router.get("/stats", roleMiddleware("owner"), getProjectsStatsController);
 router.get("/:id", getProjectByIdController);
 router.put("/:id", roleMiddleware("owner"), updateProjectController);
 router.delete("/:id", roleMiddleware("owner"), deleteProjectController);
