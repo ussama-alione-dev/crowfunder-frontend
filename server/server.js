@@ -18,12 +18,13 @@ const app = express();
 import swaggerSpec from "./swagger.js";
 import swaggerUi from "swagger-ui-express";
 import { errorHandler } from "./middlewares/ErrorHandler.middleware.js";
+import cors from "cors";
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 
 connectDB();
-
 // for testing
 app.get("/", authMiddleware, roleMiddleware("admin"), (req, res) => {
     res.json({ message: "done", user: req.user });

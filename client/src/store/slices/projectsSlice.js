@@ -22,8 +22,9 @@ export const getProjectById = createAsyncThunk(
         try {
             const res = await axiosInstance.get(`/projects/${id}`);
 
-            return res.data;
+            return res.data.data[0];
         } catch (error) {
+            console.log(error);
             return thunkAPI.rejectWithValue(
                 error.response?.data?.message || "Something went wrong",
             );

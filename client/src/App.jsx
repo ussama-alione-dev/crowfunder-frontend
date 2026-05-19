@@ -6,6 +6,7 @@ import { getProjectsStats } from "./store/slices/projectsSlice";
 import { useEffect } from "react";
 
 import Projects from "./pages/Projects";
+import ProjectDetails from "./pages/ProjectDetails";
 
 const App = () => {
     // this is the way to get the stats from the server and log it to the console, you can use this data to display it in the dashboard
@@ -54,7 +55,7 @@ const App = () => {
                         />
                         <Route
                             path="projects/:id"
-                            element={<h1>Project Details</h1>}
+                            element={<ProjectDetails />}
                         />
                         <Route
                             path="projects/:id/investors"
