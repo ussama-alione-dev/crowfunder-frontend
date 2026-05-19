@@ -4,7 +4,9 @@ import { decodeToken } from "../utils/generateToken.js";
 
 export const authMiddleware = async (req, res, next) => {
     try {
-        const token = req.cookies.token;
+        const token =
+            req.header("Authorization")?.replace("Bearer ", "") ||
+            req.cookies.token;
 
         if (!token) {
             return res.status(401).json({

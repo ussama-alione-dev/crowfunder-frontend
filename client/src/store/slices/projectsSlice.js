@@ -1,0 +1,159 @@
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axiosInstance from "../../utils/axios";
+
+export const getProjects = createAsyncThunk(
+    "projects/getProjects",
+    async (_, thunkAPI) => {
+        try {
+            const res = await axiosInstance.get("/projects");
+
+            return res.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message || "Something went wrong",
+            );
+        }
+    },
+);
+
+export const getProjectById = createAsyncThunk(
+    "projects/getProjectById",
+    async (id, thunkAPI) => {
+        try {
+            const res = await axiosInstance.get(`/projects/${id}`);
+
+            return res.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message || "Something went wrong",
+            );
+        }
+    },
+);
+
+export const createProject = createAsyncThunk(
+    "projects/createProject",
+    async (projectData, thunkAPI) => {
+        try {
+            const res = await axiosInstance.post("/projects", projectData);
+            return res.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message || "Something went wrong",
+            );
+        }
+    },
+);
+
+export const updateProject = createAsyncThunk(
+    "projects/updateProject",
+    async ({ id, projectData }, thunkAPI) => {
+        try {
+            const res = await axiosInstance.put(`/projects/${id}`, projectData);
+            return res.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message || "Something went wrong",
+            );
+        }
+    },
+);
+
+export const deleteProject = createAsyncThunk(
+    "projects/deleteProject",
+    async (id, thunkAPI) => {
+        try {
+            await axiosInstance.delete(`/projects/${id}`);
+            return id;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message || "Something went wrong",
+            );
+        }
+    },
+);
+
+const projectsSlice = createSlice({
+    name: "projects",
+    initialState: {
+        projects: [],
+        loading: false,
+        selectedProject: null,
+        error: null,
+    },
+    reducers: {},
+    extraReducers: (builder) => {
+        builder
+            .addCase(getProjects.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(getProjects.fulfilled, (state, action) => {
+                state.loading = false;
+                state.projects = action.payload;
+            })
+            .addCase(getProjects.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            });
+
+        builder
+            .addCase(getProjectById.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(getProjectById.fulfilled, (state, action) => {
+                state.loading = false;
+                state.selectedProject = action.payload;
+            })
+            .addCase(getProjectById.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            });
+
+        builder
+            .addCase(createProject.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(createProject.fulfilled, (state, action) => {
+                state.loading = false;
+                state.projects.push(action.payload);
+            })
+            .addCase(createProject.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            });
+
+        builder
+            .addCase(deleteProject.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(deleteProject.fulfilled, (state, action) => {
+                state.loading = false;
+                state.projects = state.projects.filter(
+                    (project) => project.id !== action.payload,
+                );
+            })
+            .addCase(deleteProject.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            });
+        builder
+            .addCase(updateProject.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(updateProject.fulfilled, (state, action) => {
+                state.loading = false;
+                const index = state.projects.findIndex(
+                    (project) => project.id === action.payload.id,
+                );
+                if (index !== -1) {
+                    state.projects[index] = action.payload;
+                }
+            })
+            .addCase(updateProject.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            });
+    },
+});
+
+export default projectsSlice.reducer;
