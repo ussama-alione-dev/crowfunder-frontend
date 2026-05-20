@@ -1,11 +1,8 @@
-import React from "react";
 import InvestorsListItem from "./InvestorsListItem";
 
 const InvestorsList = ({ investments, selectedProject }) => {
-    console.log(investments);
-
     return (
-        <div className="bg-card mt-10 border border-border rounded-lg p-6 text-card-foreground shadow-sm w-full max-w-5xl">
+        <div className="bg-card mt-10 border border-border rounded-lg p-6 text-card-foreground shadow-sm w-full">
             <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-3">
                     <h2 className=" font-bold text-lg uppercase tracking-tight">
@@ -19,8 +16,8 @@ const InvestorsList = ({ investments, selectedProject }) => {
             </div>
 
             <div className="space-y-2">
-                {investments?.map((investment) => (
-                    <InvestorsListItem investment={investment} />
+                {investments?.map((investment, ndx) => (
+                    <InvestorsListItem key={ndx} investment={investment} />
                 ))}
             </div>
 

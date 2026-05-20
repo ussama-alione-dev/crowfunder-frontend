@@ -5,6 +5,8 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeftIcon, Goal, HandCoins, Percent } from "lucide-react";
 import ProjectStatusTag from "../components/ProjectStatusTag";
 import InvestorsList from "../components/InvestorsList";
+import StatCard from "../components/StatsCard";
+import { formatDate } from "../utils/formatDate";
 
 const ProjectDetails = () => {
     const { selectedProject, loading, error } = useSelector(
@@ -19,8 +21,6 @@ const ProjectDetails = () => {
     }, [dispatch, id]);
 
     if (error) return <h1>{error}</h1>;
-
-    console.log(selectedProject);
 
     if (loading) return <h1>Loading...</h1>;
     return (
@@ -57,17 +57,57 @@ const ProjectDetails = () => {
                     icon={<Percent />}
                 />
             </div>
-            <InvestorsList investments={selectedProject?.investments} />
-        </div>
-    );
-};
+            <InvestorsList
+                investments={selectedProject?.investments}
+                selectedProject={selectedProject}
+            />
+            <div className="w-full grid grid-cols-2 gap-4 mt-6">
+                <div className="bg-card rounded-lg border border-border p-3 w-full ">
+                    <h2 className="uppercase text-md text-card-foreground">
+                        Owner
+                    </h2>
+                    <div className="flex mt-3 bg-secondary rounded-lg p-3 items-center gap-4">
+                        <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold">
+                            {selectedProject?.owner.name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")}
+                        </div>
 
-const StatCard = ({ title, value, icon }) => {
-    return (
-        <div className="bg-secondary rounded-lg p-4">
-            {icon && <div className="mb-4">{icon}</div>}
-            <h3 className="text-sm text-gray-500">{title}</h3>
-            <p className="text-2xl font-bold">{value}</p>
+                        <div>
+                            <h3 className="font-semibold text-base">
+                                {selectedProject?.owner.name}
+                            </h3>
+
+                            <p className="text-sm text-muted-foreground">
+                                {selectedProject?.owner.email}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div className="bg-card rounded-lg border border-border p-3 w-full ">
+                    <h2 className="uppercase text-md text-card-foreground">
+                        Details
+                    </h2>
+
+                    <div className="flex mt-3 bg-secondary rounded-lg p-3 flex-col gap-2">
+                        <p className="flex items-center justify-between">
+                            <span className="">Created At: </span>
+                            <span className="text-muted-foreground font-semibold">
+                                {new Date(
+                                    selectedProject?.createdAt,
+                                ).toLocaleDateString()}
+                            </span>
+                        </p>
+                        <p className="flex items-center justify-between">
+                            <span className="">last update : </span>
+                            <span className="text-muted-foreground font-semibold">
+                                {formatDate(selectedProject?.updatedAt)}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
