@@ -37,7 +37,7 @@ const App = () => {
               path="projects/update/:id"
               element={<h1>Update Project</h1>}
             />
-            <Route path="projects/:id" element={<h1>Project Details</h1>} />
+            <Route path="projects/:id" element={<ProjectDetails />} />
             <Route
               path="projects/:id/investors"
               element={<h1>Project Investors</h1>}
