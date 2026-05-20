@@ -6,6 +6,8 @@ import Dashboard from "./pages/Dashboard";
 
 import Projects from "./pages/Projects";
 import ProjectDetails from "./pages/ProjectDetails";
+import Login from "./pages/Login";
+import AuthLayout from "./components/layouts/AuthLayout";
 
 const App = () => {
   return (
