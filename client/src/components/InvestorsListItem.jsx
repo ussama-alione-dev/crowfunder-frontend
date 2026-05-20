@@ -23,7 +23,9 @@ const InvestorsListItem = ({ investment }) => {
             </div>
 
             <div className="text-right">
-                <p className="text-xl font-bold">{investment.amount}</p>
+                <p className="text-xl font-bold">
+                    ${investment.amount.toLocaleString()}
+                </p>
 
                 <span className="text-xs text-emerald-500 font-medium">
                     Active Investor
