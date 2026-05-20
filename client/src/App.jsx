@@ -7,6 +7,8 @@ import { useEffect } from "react";
 
 import Projects from "./pages/Projects";
 import ProjectDetails from "./pages/ProjectDetails";
+import Login from "./pages/Login";
+import AuthLayout from "./components/layouts/AuthLayout";
 
 const App = () => {
     // this is the way to get the stats from the server and log it to the console, you can use this data to display it in the dashboard
@@ -34,8 +36,10 @@ const App = () => {
             />
             <BrowserRouter>
                 <Routes>
-                    <Route path="/login" element={<h1>Login</h1>} />
-                    <Route path="/register" element={<h1>Register</h1>} />
+                    <Route element={<AuthLayout />}>
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<h1>Register</h1>} />
+                    </Route>
 
                     <Route path="/" element={<AppLayout />}>
                         <Route
