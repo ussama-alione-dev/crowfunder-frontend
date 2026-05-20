@@ -5,9 +5,9 @@ import { Toaster } from "react-hot-toast";
 import Dashboard from "./pages/Dashboard";
 
 import Projects from "./pages/Projects";
+import ProjectDetails from "./pages/ProjectDetails";
 
 const App = () => {
-  
   return (
     <>
       <Toaster
@@ -25,8 +25,8 @@ const App = () => {
         <Routes>
           <Route path="/login" element={<h1>Login</h1>} />
           <Route path="/register" element={<h1>Register</h1>} />
-          
-        {/*Dashboard*/}
+
+          {/*Dashboard*/}
           <Route path="/" element={<AppLayout />}>
             <Route index element={<Dashboard />} />
 
