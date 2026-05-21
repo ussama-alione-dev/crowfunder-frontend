@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProject, getProjectById } from "../store/slices/projectsSlice";
+import {
+    deleteProject,
+    getProjectById,
+    closeProject,
+} from "../store/slices/projectsSlice";
 import { Link, useParams } from "react-router-dom";
 import {
     ArrowLeftIcon,
@@ -48,6 +52,12 @@ const ProjectDetails = () => {
         navigate("/projects");
     };
 
+    const handleCloseProject = () => {
+        dispatch(closeProject(id));
+        setIsOpen(false);
+        toast.success("Project closed successfully");
+    };
+
     const openDeleteModal = () => {
         setModalContent({
             title: "Confirm Deletion",
@@ -70,6 +80,36 @@ const ProjectDetails = () => {
                             onClick={handleDelete}
                         >
                             confirm delete
+                        </button>
+                    </div>
+                </div>
+            ),
+        });
+        setIsOpen(true);
+    };
+
+    const openCloseModal = () => {
+        setModalContent({
+            title: "Confirm Close Project",
+            children: (
+                <div>
+                    <p>
+                        Are you sure you want to close this project? This action
+                        cannot be undone.
+                    </p>
+
+                    <div className="flex items-center gap-2">
+                        <button
+                            className="bg-secondary cursor-pointer transition-all duration-200 p-2 text-sm rounded  text-secondary-foreground hover:bg-secondary/80 mt-4 ml-2"
+                            onClick={closeModal}
+                        >
+                            cancel
+                        </button>
+                        <button
+                            className="bg-destructive cursor-pointer transition-all duration-200 p-2 text-sm rounded  text-destructive-foreground hover:bg-destructive/80 mt-4"
+                            onClick={handleCloseProject}
+                        >
+                            confirm close
                         </button>
                     </div>
                 </div>
@@ -131,7 +171,10 @@ const ProjectDetails = () => {
                             delete project
                         </button>
                         {selectedProject?.status === "active" && (
-                            <button className="bg-accent cursor-pointer transition-all duration-200 p-2 text-sm rounded  text-destructive-foreground hover:bg-accent/80">
+                            <button
+                                className="bg-accent cursor-pointer transition-all duration-200 p-2 text-sm rounded  text-destructive-foreground hover:bg-accent/80"
+                                onClick={openCloseModal}
+                            >
                                 close project
                             </button>
                         )}

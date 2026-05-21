@@ -94,6 +94,20 @@ export const getProjectsStats = createAsyncThunk(
     },
 );
 
+export const closeProject = createAsyncThunk(
+    "projects/closeProject",
+    async (id, thunkAPI) => {
+        try {
+            const res = await axiosInstance.put(`/projects/${id}/close`);
+            return res.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message || "Something went wrong",
+            );
+        }
+    },
+);
+
 const projectsSlice = createSlice({
     name: "projects",
     initialState: {
@@ -185,6 +199,23 @@ const projectsSlice = createSlice({
                 state.stats = action.payload;
             })
             .addCase(getProjectsStats.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            });
+        builder
+            .addCase(closeProject.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(closeProject.fulfilled, (state, action) => {
+                state.loading = false;
+                const index = state.projects.findIndex(
+                    (project) => project.id === action.payload.id,
+                );
+                if (index !== -1) {
+                    state.projects[index] = action.payload;
+                }
+            })
+            .addCase(closeProject.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             });
