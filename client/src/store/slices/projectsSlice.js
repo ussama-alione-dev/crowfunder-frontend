@@ -39,6 +39,10 @@ export const createProject = createAsyncThunk(
             const res = await axiosInstance.post("/projects", projectData);
             return res.data;
         } catch (error) {
+            if (error.response?.data?.errors) {
+                return thunkAPI.rejectWithValue(error.response.data.errors);
+            }
+
             return thunkAPI.rejectWithValue(
                 error.response?.data?.message || "Something went wrong",
             );
@@ -64,9 +68,10 @@ export const deleteProject = createAsyncThunk(
     "projects/deleteProject",
     async (id, thunkAPI) => {
         try {
-            await axiosInstance.delete(`/projects/${id}`);
-            return id;
+            const res = await axiosInstance.delete(`/projects/${id}`);
+            return res.data;
         } catch (error) {
+            console.log(error);
             return thunkAPI.rejectWithValue(
                 error.response?.data?.message || "Something went wrong",
             );

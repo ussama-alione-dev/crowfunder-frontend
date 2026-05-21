@@ -9,6 +9,7 @@ import ProjectDetails from "./pages/ProjectDetails";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AuthLayout from "./components/layouts/AuthLayout";
+import CreateProject from "./pages/CreateProject";
 
 const App = () => {
     return (
@@ -36,7 +37,7 @@ const App = () => {
                         <Route path="projects" element={<Projects />} />
                         <Route
                             path="create-project"
-                            element={<h1>Create Project</h1>}
+                            element={<CreateProject />}
                         />
 
                         <Route
