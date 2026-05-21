@@ -10,6 +10,9 @@ import {
 import { useSelector } from "react-redux";
 
 import avatar from "../assets/avatar.jpg";
+import { logout } from "../store/slices/authSlice";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const NAVLINKS = {
     dashboard: {
@@ -31,6 +34,17 @@ const NAVLINKS = {
 };
 
 const Sidebar = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const { user } = useSelector((state) => state.auth);
+
+    const handleLogout = () => {
+        console.log("Logging out...");
+        dispatch(logout());
+        navigate("/login");
+    };
+
     return (
         <aside className="w-80  relative min-h-screen border-r border-secondary bg-background  p-4">
             <div className="mb-16 border-b border-secondary pb-4 mt-10 flex items-center font-semibold text-xl gap-2">
@@ -60,12 +74,21 @@ const Sidebar = () => {
                         alt="Avatar"
                     />
                     <div>
-                        <p>Oussama Alione</p>
+                        <p className="capitalize">
+                            {user?.name || "Oussama Alione"}
+                        </p>
                         <p className="text-sm s text-muted-foreground">
-                            project owner
+                            {user.role === "admin"
+                                ? "Administrator"
+                                : user.role === "investor"
+                                  ? "Investor"
+                                  : "Project Owner"}
                         </p>
                     </div>
-                    <button className="bg-background hover:bg-background/70 hover:text-primary transition-all duration-200 ml-6 cursor-pointer p-2 rounded-sm">
+                    <button
+                        onClick={handleLogout}
+                        className="bg-background hover:bg-background/70 hover:text-primary transition-all duration-200 ml-6 cursor-pointer p-2 rounded-sm"
+                    >
                         <LogOut size={20} />
                     </button>
                 </div>
