@@ -11,6 +11,7 @@ import {
 
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 import roleMiddleware from "../middlewares/role.middleware.js";
+import { validateCreateProject } from "../middlewares/projectValidator.middleware.js";
 
 const router = Router();
 
@@ -84,12 +85,22 @@ const router = Router();
  *         description: Server error
  */
 
-router.post("/", roleMiddleware("owner"), createProjectController);
+router.post(
+    "/",
+    roleMiddleware("owner"),
+    validateCreateProject,
+    createProjectController,
+);
+
 router.get("/", roleMiddleware("owner"), getAllProjectsController);
 router.get("/stats", roleMiddleware("owner"), getProjectsStatsController);
 router.get("/:id", getProjectByIdController);
-router.put("/:id", roleMiddleware("owner"), updateProjectController);
+router.put(
+    "/:id",
+    validateCreateProject,
+    roleMiddleware("owner"),
+    updateProjectController,
+);
 router.delete("/:id", roleMiddleware("owner"), deleteProjectController);
 router.put("/:id/close", roleMiddleware("owner"), closeProjectController);
-
 export default router;

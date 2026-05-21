@@ -2,9 +2,11 @@ import React from "react";
 import ProjectStatusTag from "./ProjectStatusTag";
 import { Eye } from "lucide-react";
 import { Link } from "react-router-dom";
+import Modal from "./Modal";
+import { useState } from "react";
 
 const ProjectsTable = ({ projects }) => {
-    console.log(projects);
+    const [isOpen, setIsOpen] = useState(false);
 
     return (
         <table className="w-full text-sm text-left">
@@ -34,13 +36,13 @@ const ProjectsTable = ({ projects }) => {
                     >
                         <td className="px-6 py-4">{project.description}</td>
                         <td className="px-6 py-4">
-                            ${project.fundingGoal.toFixed(2)}
+                            ${project.fundingGoal?.toFixed(2)}
                         </td>
                         <td className="px-6 py-4">
-                            ${project.currentFunding.toFixed(2)}
+                            ${project.currentFunding?.toFixed(2)}
                         </td>
                         <td className="px-6 py-4">
-                            {<ProjectStatusTag status={project.status} />}
+                            {<ProjectStatusTag status={project?.status} />}
                         </td>
                         <td className="">
                             <Link
