@@ -31,9 +31,6 @@ const NAVLINKS = {
 };
 
 const Sidebar = () => {
-    const { user } = useSelector((state) => state.auth);
-
-    console.log(user);
     return (
         <aside className="w-80  relative min-h-screen border-r border-secondary bg-background  p-4">
             <div className="mb-16 border-b border-secondary pb-4 mt-10 flex items-center font-semibold text-xl gap-2">

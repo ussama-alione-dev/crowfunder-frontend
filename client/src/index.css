@@ -139,3 +139,7 @@
 aside a.active {
     @apply bg-primary/10  text-primary;
 }
+
+button:disabled {
+    @apply cursor-not-allowed opacity-50;
+}

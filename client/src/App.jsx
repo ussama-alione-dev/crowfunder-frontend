@@ -8,8 +8,8 @@ import Projects from "./pages/Projects";
 import ProjectDetails from "./pages/ProjectDetails";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import AuthLayout from "./components/layouts/AuthLayout";
 import CreateProject from "./pages/CreateProject";
+import UpdateProject from "./pages/UpdateProject";
 
 const App = () => {
     return (
@@ -41,8 +41,8 @@ const App = () => {
                         />
 
                         <Route
-                            path="projects/update/:id"
-                            element={<h1>Update Project</h1>}
+                            path="projects/:id/edit"
+                            element={<UpdateProject />}
                         />
                         <Route
                             path="projects/:id"

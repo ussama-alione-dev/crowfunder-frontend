@@ -139,7 +139,8 @@ const CreateProjectForm = () => {
                 />
             </CreateProjectFormRow>
             <button
-                className="bg-primary text-primary-foreground p-3 rounded hover:bg-primary/90"
+                disabled={loading}
+                className="bg-primary disabled:cursor-not-allowed text-primary-foreground p-3 rounded hover:bg-primary/90"
                 type="submit"
             >
                 Create Project
