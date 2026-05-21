@@ -1,8 +1,8 @@
 import { Component } from "lucide-react";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { login } from "../store/slices/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { login, setLoading } from "../store/slices/authSlice";
 import toast from "react-hot-toast";
 
 import { loginApi } from "../services/authApi";
@@ -16,19 +16,23 @@ const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const { loading } = useSelector((state) => state.auth);
+
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
+            dispatch(setLoading(true));
             const { token, user } = await loginApi(email, password);
 
             localStorage.setItem("token", token);
+            localStorage.setItem("user", JSON.stringify(user));
 
             dispatch(login({ token, user }));
-            localStorage.setItem("user", JSON.stringify(user));
 
             toast.success("login success welcome back " + user.name);
             navigate("/");
         } catch (error) {
+            dispatch(setLoading(false));
             if (error.message) {
                 setFormError({ message: error.message });
                 return;
@@ -87,7 +91,7 @@ const Login = () => {
                     className="bg-primary text-white p-3 rounded-md hover:bg-primary/90 cursor-pointer transition-colors duration-200"
                     type="submit"
                 >
-                    Login
+                    {loading ? "Logging in..." : "Login"}
                 </button>
             </form>
             <span className="mt-4 text-sm text-muted-foreground">
