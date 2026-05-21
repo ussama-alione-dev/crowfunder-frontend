@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProject, getProjectById } from "../store/slices/projectsSlice";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeftIcon, Goal, HandCoins, Percent } from "lucide-react";
+import {
+    ArrowLeftIcon,
+    Goal,
+    HandCoins,
+    InfoIcon,
+    Percent,
+} from "lucide-react";
 import ProjectStatusTag from "../components/ProjectStatusTag";
 import InvestorsList from "../components/InvestorsList";
 import StatCard from "../components/StatsCard";
@@ -79,6 +85,20 @@ const ProjectDetails = () => {
     if (error) return <h1>{error}</h1>;
     if (loading) return <h1>Loading...</h1>;
 
+    if (!selectedProject)
+        return (
+            <div className="text-center mt-10 text-lg bg-card p-10 rounded border border-border w-full h-40 ">
+                <InfoIcon
+                    size={30}
+                    className="mx-auto mb-4 text-muted-foreground"
+                />
+                <p>
+                    Project not found. It might have been deleted or the ID is
+                    incorrect.
+                </p>
+            </div>
+        );
+
     return (
         <div>
             <Modal
@@ -116,7 +136,7 @@ const ProjectDetails = () => {
                             </button>
                         )}
                         <Link
-                            to={`/projects/${selectedProject?.id}/edit`}
+                            to={`/projects/${selectedProject?._id}/edit`}
                             className="bg-primary cursor-pointer transition-all duration-200 p-2 text-sm rounded  text-primary-foreground hover:bg-primary/80"
                         >
                             edit project
