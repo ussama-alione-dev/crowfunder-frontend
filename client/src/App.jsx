@@ -10,6 +10,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import CreateProject from "./pages/CreateProject";
 import UpdateProject from "./pages/UpdateProject";
+import ProtectedRoute from "./components/ProtectedRoutes";
+import AuthRedirect from "./components/AuthRedirect";
 
 const App = () => {
     return (
@@ -27,11 +29,32 @@ const App = () => {
             />
             <BrowserRouter>
                 <Routes>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
+                    <Route
+                        path="/login"
+                        element={
+                            <AuthRedirect>
+                                <Login />
+                            </AuthRedirect>
+                        }
+                    />
+                    <Route
+                        path="/register"
+                        element={
+                            <AuthRedirect>
+                                <Register />
+                            </AuthRedirect>
+                        }
+                    />
 
                     {/*Dashboard*/}
-                    <Route path="/" element={<AppLayout />}>
+                    <Route
+                        path="/"
+                        element={
+                            <ProtectedRoute>
+                                <AppLayout />
+                            </ProtectedRoute>
+                        }
+                    >
                         <Route index element={<Dashboard />} />
 
                         <Route path="projects" element={<Projects />} />
