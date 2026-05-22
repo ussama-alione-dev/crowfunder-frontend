@@ -73,7 +73,7 @@ const Dashboard = () => {
     return (
         <div className="dashboard">
             <div className="dashboard-header">
-                <h1 className="title-color">Dashboard</h1>
+                <h1 className="page-heading">Dashboard</h1>
 
                 <Link to="/create-project" className="title-color button">
                     Nouveau Projet
