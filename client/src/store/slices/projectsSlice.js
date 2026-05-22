@@ -3,9 +3,9 @@ import axiosInstance from "../../utils/axios";
 
 export const getOwnerProjects = createAsyncThunk(
     "projects/getProjects",
-    async (_, thunkAPI) => {
+    async (status, thunkAPI) => {
         try {
-            const res = await axiosInstance.get("/projects");
+            const res = await axiosInstance.get(`/projects?status=${status}`);
 
             return res.data.data.projects;
         } catch (error) {

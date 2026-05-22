@@ -1,8 +1,8 @@
 import { Filter } from "lucide-react";
 import React from "react";
+import { useSearchParams } from "react-router-dom";
 
-const ProjectsFilter = () => {
-    const [selectedFilter, setSelectedFilter] = React.useState("All");
+const ProjectsFilter = ({ selectedFilter, setSelectedFilter }) => {
     return (
         <div className="mt-20 flex items-center gap-2">
             <Filter className="stroke-primary  mr-6" size={20} />

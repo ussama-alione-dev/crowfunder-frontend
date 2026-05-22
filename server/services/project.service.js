@@ -3,8 +3,6 @@ import Investment from "../models/Investment.model.js";
 import mongoose from "mongoose";
 import { CustomError } from "../utils/CustomError.js";
 
-//Todo  : Implement getAllProjectsService, getProjectByIdService, updateProjectService, deleteProjectService
-
 export const createProjectService = async (projectData) => {
     const project = await Project.create(projectData);
 
@@ -14,8 +12,10 @@ export const createProjectService = async (projectData) => {
     return project;
 };
 
-export async function getAllProjectsService(userId) {
-    const projects = await Project.find({ owner: userId }).populate("owner");
+export async function getAllProjectsService(userId, query) {
+    const projects = await Project.find({ owner: userId, ...query }).populate(
+        "owner",
+    );
 
     const investments = await Investment.find({
         project: { $in: projects.map((p) => p._id) },
