@@ -12,6 +12,9 @@ import CreateProject from "./pages/CreateProject";
 import UpdateProject from "./pages/UpdateProject";
 import ProtectedRoute from "./components/ProtectedRoutes";
 import AuthRedirect from "./components/AuthRedirect";
+import Investors from "./pages/Investors";
+import Unauthorized from "./pages/Unauthorized";
+import PrivateRoutes from "./components/PrivateRoutes";
 
 const App = () => {
     return (
@@ -57,7 +60,14 @@ const App = () => {
                     >
                         <Route index element={<Dashboard />} />
 
-                        <Route path="projects" element={<Projects />} />
+                        <Route
+                            path="projects"
+                            element={
+                                <PrivateRoutes role={["owner", "admin"]}>
+                                    <Projects />
+                                </PrivateRoutes>
+                            }
+                        />
                         <Route
                             path="create-project"
                             element={<CreateProject />}
@@ -72,16 +82,27 @@ const App = () => {
                             element={<ProjectDetails />}
                         />
                         <Route
+                            path="investors"
+                            element={
+                                <PrivateRoutes role={["admin"]}>
+                                    <Investors />
+                                </PrivateRoutes>
+                            }
+                        />
+                        {/* <Route
                             path="projects/:id/investors"
                             element={<h1>Project Investors</h1>}
-                        />
+                        /> */}
 
                         <Route
                             path="investors/:id"
                             element={<h1>Investor Details</h1>}
                         />
+                        <Route
+                            path="/unauthorized"
+                            element={<Unauthorized />}
+                        />
                     </Route>
-
                     <Route path="*" element={<h1>Page Not Found</h1>} />
                 </Routes>
             </BrowserRouter>

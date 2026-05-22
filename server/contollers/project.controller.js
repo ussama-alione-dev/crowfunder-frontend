@@ -8,6 +8,7 @@ import {
     deleteProjectService,
     closeProjectService,
     getProjectsStatsService,
+    getAllProjectForAdminService,
 } from "../services/project.service.js";
 
 export const createProjectController = async (req, res) => {
@@ -81,5 +82,13 @@ export const getProjectsStatsController = async (req, res) => {
     res.status(200).json({
         success: true,
         data: stats,
+    });
+};
+
+export const getAllProjectsForAdminController = async (req, res) => {
+    const projects = await getAllProjectForAdminService();
+    res.status(200).json({
+        success: true,
+        data: projects,
     });
 };

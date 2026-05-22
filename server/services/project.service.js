@@ -191,3 +191,11 @@ export const getProjectsStatsService = async () => {
 
     return stats[0];
 };
+
+export const getAllProjectForAdminService = async () => {
+    const projects = await Project.find().populate("owner");
+    if (!projects) {
+        throw new CustomError("Error fetching projects: " + error.message);
+    }
+    return projects;
+};

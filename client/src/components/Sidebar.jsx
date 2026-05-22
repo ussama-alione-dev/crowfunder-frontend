@@ -6,6 +6,7 @@ import {
     Home,
     LogOut,
     MousePointer2,
+    UsersRound,
 } from "lucide-react";
 import { useSelector } from "react-redux";
 
@@ -31,6 +32,11 @@ const NAVLINKS = {
         path: "create-project",
         icon: <FolderPlus size={16} />,
     },
+    investors: {
+        name: "investors",
+        path: "investors",
+        icon: <UsersRound size={16} />,
+    },
 };
 
 const Sidebar = () => {
@@ -54,16 +60,26 @@ const Sidebar = () => {
                 <h1 className="">CrowFunder</h1>
             </div>
 
-            {Object.entries(NAVLINKS).map(([key, link]) => (
-                <NavLink
-                    key={key}
-                    to={`/${key === "dashboard" ? "" : link.path}`}
-                    className="  flex items-center p-3   gap-4 rounded text-secondary-foreground hover:text-primary hover:bg-primary/10 mb-1"
-                >
-                    {link.icon}
-                    {link.name}
-                </NavLink>
-            ))}
+            {Object.entries(NAVLINKS).map(([key, link]) => {
+                if (key === "investors" && user?.role !== "admin") {
+                    return null;
+                }
+
+                if (key === "projects" && user?.role === "investor") {
+                    return null;
+                }
+
+                return (
+                    <NavLink
+                        key={key}
+                        to={`/${key === "dashboard" ? "" : link.path}`}
+                        className="flex items-center p-3 gap-4 rounded text-secondary-foreground hover:text-primary hover:bg-primary/10 mb-1"
+                    >
+                        {link.icon}
+                        {link.name}
+                    </NavLink>
+                );
+            })}
             <div className="absolute  bottom-10 w-[calc(100%-2rem)] ">
                 <div className="bg-secondary flex items-center gap-4 p-2 rounded-lg border border-border ">
                     <img

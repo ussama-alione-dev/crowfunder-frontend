@@ -33,7 +33,7 @@ const validateRegister = [
     body("role")
         .notEmpty()
         .withMessage("Role is required")
-        .isIn(["owner", "investor"])
+        .isIn(["owner", "investor", "admin"])
         .withMessage("Role must be owner or investor"),
 
     handleValidation,
