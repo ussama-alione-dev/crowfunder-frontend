@@ -29,8 +29,15 @@ export const createProjectController = async (req, res) => {
 };
 
 export const getAllProjectsController = async (req, res) => {
-    // const { projects, investments } = await getAllProjectsService();
-    const { projects, investments } = await getAllProjectsService(req.user._id);
+    const query = {};
+
+    if (req.query.status && req.query.status !== "all") {
+        query.status = req.query.status;
+    }
+    const { projects, investments } = await getAllProjectsService(
+        req.user._id,
+        query,
+    );
 
     res.status(200).json({
         success: true,

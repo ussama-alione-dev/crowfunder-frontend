@@ -52,7 +52,7 @@ const Sidebar = () => {
     };
 
     return (
-        <aside className="w-80  relative min-h-screen border-r border-secondary bg-background  p-4">
+        <aside className="w-80  relative min-h-screen border-r border-secondary bg-card/80  p-4">
             <div className="mb-16 border-b border-secondary pb-4 mt-10 flex items-center font-semibold text-xl gap-2">
                 <div className="p-2 bg-secondary border border-primary/30 rounded flex items-center justify-center">
                     <Component size={20} className="stroke-primary " />

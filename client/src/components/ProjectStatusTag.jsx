@@ -1,9 +1,9 @@
 function ProjectStatusTag({ status }) {
     const STATUS_STYLES = {
         active: {
-            bg: "rgba(43, 127, 255, 0.15)",
-            color: "#91c5ff",
-            dot: "#2b7fff",
+            bg: "rgba(34, 197, 94, 0.15)",
+            color: "#86efac",
+            dot: "#22c55e",
             label: "Open",
         },
         closed: {
