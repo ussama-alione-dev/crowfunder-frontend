@@ -6,6 +6,7 @@ import { login, setLoading } from "../store/slices/authSlice";
 import toast from "react-hot-toast";
 
 import { loginApi } from "../services/authApi";
+import Silk from "../components/Silk";
 
 const Login = () => {
     const [email, setEmail] = React.useState("");
@@ -43,63 +44,78 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center flex-col justify-center">
-            <h1 className="text-2xl  font-bold mb-4">Login</h1>
-            {formError && formError.message && (
-                <span className="text-red-500 text-sm">
-                    {formError.message}
-                </span>
-            )}
-            <form
-                onSubmit={handleLogin}
-                action=""
-                className="w-1/2  flex flex-col gap-4 mt-4"
-            >
-                <input
-                    className="bg-accent p-3 rounded-md border-none outline-none focus:ring-2 focus:ring-primary transition-all duration-200"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Email"
-                />
-
-                {formError && (
+        <div className="w-full h-screen relative overflow-hidden grid  grid-cols-3 p-4">
+            <div className=" flex w-full p-10  items-center flex-col justify-center">
+                <h1 className="text-2xl  font-bold mb-4">Login</h1>
+                {formError && formError.message && (
                     <span className="text-red-500 text-sm">
-                        {formError
-                            .filter((error) => error.field === "email")
-                            .map((error) => error.message)
-                            .join(", ")}
+                        {formError.message}
                     </span>
                 )}
-
-                <input
-                    className="bg-accent p-3 rounded-md border-none outline-none focus:ring-2 focus:ring-primary transition-all duration-200"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
-                />
-                {formError && (
-                    <span className="text-red-500 text-sm">
-                        {formError
-                            .filter((error) => error.field === "password")
-                            .map((error) => error.message)
-                            .join(", ")}
-                    </span>
-                )}
-
-                <button
-                    className="bg-primary text-white p-3 rounded-md hover:bg-primary/90 cursor-pointer transition-colors duration-200"
-                    type="submit"
+                <form
+                    onSubmit={handleLogin}
+                    action=""
+                    className="w-4/5 flex flex-col gap-4 mt-4"
                 >
-                    {loading ? "Logging in..." : "Login"}
-                </button>
-            </form>
-            <span className="mt-4 text-sm text-muted-foreground">
-                Don't have an account?{" "}
-                <Link to="/register" className="text-primary  hover:underline">
-                    Register
-                </Link>
-            </span>
+                    <input
+                        className="bg-accent p-3 rounded-md border-none outline-none focus:ring-2 focus:ring-primary transition-all duration-200"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Email"
+                    />
+
+                    {formError && (
+                        <span className="text-red-500 text-sm">
+                            {formError
+                                .filter((error) => error.field === "email")
+                                .map((error) => error.message)
+                                .join(", ")}
+                        </span>
+                    )}
+
+                    <input
+                        className="bg-accent p-3 rounded-md border-none outline-none focus:ring-2 focus:ring-primary transition-all duration-200"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Password"
+                    />
+                    {formError && (
+                        <span className="text-red-500 text-sm">
+                            {formError
+                                .filter((error) => error.field === "password")
+                                .map((error) => error.message)
+                                .join(", ")}
+                        </span>
+                    )}
+
+                    <button
+                        className="bg-primary text-white p-3 rounded-md hover:bg-primary/90 cursor-pointer transition-colors duration-200"
+                        type="submit"
+                    >
+                        {loading ? "Logging in..." : "Login"}
+                    </button>
+                </form>
+                <span className="mt-4 text-sm text-muted-foreground">
+                    Don't have an account?{" "}
+                    <Link
+                        to="/register"
+                        className="text-primary  hover:underline"
+                    >
+                        Register
+                    </Link>
+                </span>
+            </div>
+            <div className="w-full rounded-lg col-span-2  h-full overflow-hidden relative">
+                <Silk
+                    speed={5}
+                    scale={1}
+                    color="#5227FF"
+                    noiseIntensity={1.5}
+                    rotation={0}
+                    className="rounded-lg"
+                />
+            </div>
         </div>
     );
 };
