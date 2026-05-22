@@ -1,17 +1,26 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProjects } from "../store/slices/projectsSlice";
+import {
+    getOwnerProjects,
+    getAllProjects,
+} from "../store/slices/projectsSlice";
 import ProjectsTable from "../components/ProjectsTable";
 import ProjectsFilter from "../components/ProjectsFilter";
 
 const Projects = () => {
     const { projects, error, loading } = useSelector((state) => state.projects);
 
+    const { user } = useSelector((state) => state.auth);
+
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getProjects());
-    }, [dispatch]);
+        if (user && user.role === "admin") {
+            dispatch(getAllProjects());
+        } else {
+            dispatch(getOwnerProjects());
+        }
+    }, [dispatch, user]);
 
     return (
         <div>

@@ -4,6 +4,7 @@ import {
     createProjectController,
     deleteProjectController,
     getAllProjectsController,
+    getAllProjectsForAdminController,
     getProjectByIdController,
     getProjectsStatsController,
     updateProjectController,
@@ -94,6 +95,7 @@ router.post(
 
 router.get("/", roleMiddleware("owner"), getAllProjectsController);
 router.get("/stats", roleMiddleware("owner"), getProjectsStatsController);
+router.get("/all", roleMiddleware("admin"), getAllProjectsForAdminController);
 router.get("/:id", getProjectByIdController);
 router.put(
     "/:id",
@@ -103,4 +105,5 @@ router.put(
 );
 router.delete("/:id", roleMiddleware("owner"), deleteProjectController);
 router.put("/:id/close", roleMiddleware("owner"), closeProjectController);
+
 export default router;

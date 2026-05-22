@@ -21,9 +21,9 @@ export const registerService = async (name, email, password, role) => {
     if (existingUser) {
         throw new CustomError("Email already in use", 400);
     }
-    if (!["owner", "investor"].includes(role)) {
-        throw new CustomError("Role must be owner or investor", 400);
-    }
+    // if (!["owner", "investor"].includes(role)) {
+    //     throw new CustomError("Role must be owner or investor", 400);
+    // }
 
     const hashedPassword = await hashPassword(password);
     const user = await User.create({

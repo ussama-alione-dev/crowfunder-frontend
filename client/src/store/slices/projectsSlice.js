@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../utils/axios";
 
-export const getProjects = createAsyncThunk(
+export const getOwnerProjects = createAsyncThunk(
     "projects/getProjects",
     async (_, thunkAPI) => {
         try {
@@ -108,6 +108,20 @@ export const closeProject = createAsyncThunk(
     },
 );
 
+export const getAllProjects = createAsyncThunk(
+    "projects/getAllProjects",
+    async (_, thunkAPI) => {
+        try {
+            const res = await axiosInstance.get("/projects/all");
+            return res.data.data.projects;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message || "Something went wrong",
+            );
+        }
+    },
+);
+
 const projectsSlice = createSlice({
     name: "projects",
     initialState: {
@@ -120,14 +134,14 @@ const projectsSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(getProjects.pending, (state) => {
+            .addCase(getOwnerProjects.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(getProjects.fulfilled, (state, action) => {
+            .addCase(getOwnerProjects.fulfilled, (state, action) => {
                 state.loading = false;
                 state.projects = action.payload;
             })
-            .addCase(getProjects.rejected, (state, action) => {
+            .addCase(getOwnerProjects.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             });
@@ -217,6 +231,20 @@ const projectsSlice = createSlice({
             })
             .addCase(closeProject.rejected, (state, action) => {
                 state.loading = false;
+                state.error = action.payload;
+            });
+
+        builder
+            .addCase(getAllProjects.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(getAllProjects.fulfilled, (state, action) => {
+                state.loading = false;
+                state.projects = action.payload;
+            })
+            .addCase(getAllProjects.rejected, (state, action) => {
+                state.loading = false;
+
                 state.error = action.payload;
             });
     },
