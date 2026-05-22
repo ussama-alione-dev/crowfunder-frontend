@@ -35,7 +35,7 @@ const CreateProjectForm = () => {
 
         if (createProject.fulfilled.match(result)) {
             toast.success("Project created");
-            navigate("/projects");
+            // navigate("/projects");
         }
     };
 

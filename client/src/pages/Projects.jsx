@@ -15,11 +15,12 @@ const Projects = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (user && user.role === "admin") {
-            dispatch(getAllProjects());
-        } else {
-            dispatch(getOwnerProjects());
-        }
+        dispatch(getOwnerProjects());
+        // if (user && user.role === "admin") {
+        //     dispatch(getAllProjects());
+        // } else {
+        //     dispatch(getOwnerProjects());
+        // }
     }, [dispatch, user]);
 
     return (
