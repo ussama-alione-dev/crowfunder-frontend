@@ -42,6 +42,11 @@ const validateCreateProject = [
         .isFloat({ min: 0 })
         .withMessage("Current funding cannot be negative"),
 
+    body("maxInvestPercentage")
+        .optional()
+        .isFloat({ min: 0, max: 50 })
+        .withMessage("Max investment percentage must be  between 1 and 50"),
+
     handleValidation,
 ];
 

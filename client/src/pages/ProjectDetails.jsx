@@ -201,7 +201,7 @@ const ProjectDetails = () => {
                 />
                 <StatCard
                     title="max investment percentage"
-                    value={`${selectedProject?.maxInvestPercentage}%`}
+                    value={`${selectedProject?.maxInvestPercentage * 100}%`}
                     icon={<Percent />}
                 />
             </div>

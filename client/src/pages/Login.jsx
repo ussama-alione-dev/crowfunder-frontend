@@ -43,6 +43,8 @@ const Login = () => {
         }
     };
 
+    console.log(Array.isArray(formError));
+    console.log(formError);
     return (
         <div className="w-full h-screen relative overflow-hidden grid  grid-cols-3 p-4">
             <div className=" flex w-full p-10  items-center flex-col justify-center">
@@ -64,7 +66,7 @@ const Login = () => {
                         placeholder="Email"
                     />
 
-                    {formError && (
+                    {Array.isArray(formError) && (
                         <span className="text-red-500 text-sm">
                             {formError
                                 .filter((error) => error.field === "email")
@@ -80,7 +82,7 @@ const Login = () => {
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Password"
                     />
-                    {formError && (
+                    {Array.isArray(formError) && (
                         <span className="text-red-500 text-sm">
                             {formError
                                 .filter((error) => error.field === "password")

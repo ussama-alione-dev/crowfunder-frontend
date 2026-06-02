@@ -12,20 +12,16 @@ const ProjectsTable = ({ projects }) => {
         <table className="w-full text-sm text-left">
             <thead>
                 <tr>
-                    {[
-                        "Description",
-                        "Goal Amount",
-                        "Current Amount",
-                        "Status",
-                        "Actions",
-                    ].map((header) => (
-                        <th
-                            className="px-6 py-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground"
-                            key={header}
-                        >
-                            {header}
-                        </th>
-                    ))}
+                    {["Goal Amount", "Current Amount", "Status", "Actions"].map(
+                        (header) => (
+                            <th
+                                className="px-6 py-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground"
+                                key={header}
+                            >
+                                {header}
+                            </th>
+                        ),
+                    )}
                 </tr>
             </thead>
             <tbody className="divide-y divide-border ">
@@ -34,7 +30,7 @@ const ProjectsTable = ({ projects }) => {
                         className="hover:bg-background/20 duration-200 transition-colors"
                         key={project._id}
                     >
-                        <td className="px-6 py-4">{project.description}</td>
+                        <td className="px-6 py-4">{project.name}</td>
                         <td className="px-6 py-4">
                             ${project.fundingGoal?.toFixed(2)}
                         </td>

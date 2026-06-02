@@ -29,12 +29,17 @@ const CreateProjectForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(form);
 
         const result = await dispatch(createProject(form));
 
         if (createProject.fulfilled.match(result)) {
             toast.success("Project created");
+            setForm({
+                name: "",
+                description: "",
+                fundingGoal: 0,
+                maxInvestPercentage: 0,
+            });
             // navigate("/projects");
         }
     };
